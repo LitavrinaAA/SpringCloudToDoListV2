@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+<!-- delModal -->
+<div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="del-modal-title" id="delModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <fieldset disabled>
+                        <input type="hidden" name="taskId" class="del-task-id">
+                        <div class="mb-3 row">
+                            <label for="del-title" class="col-sm-2 col-form-label">Заголовок</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control del-task-title" id="del-title">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="del-description" class="col-sm-2 col-form-label ">Текс</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control del-task-description" id="del-description">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary cancel-button" data-bs-dismiss="modal" id = "deleteModalCloseButton">Отмена</button>
+                <button type="button" class="btn btn-danger del-button"   id="del-user-button">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Обновление-->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--                <form th:action="@{/updateUser}" method="post">-->
+                <form>
+                    <input type="hidden" name="taskId" class="up-task-id">
+                    <div class="mb-3 row">
+                        <label for="up-title" class="col-sm-2 col-form-label">Заголовок</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control up-task-title" id="up-title">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="up-description" class="form-label">Описание</label>
+                        <textarea class="form-control up-task-description" id="up-description" rows="3"></textarea>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id = "updateModalCloseButton">Отменить</button>
+                <button type="button" class="btn btn-primary update-button"
+                        id="update-user-button">Обновить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Новая задача-->
+<div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--                <form th:action="@{/updateUser}" method="post">-->
+                <form>
+
+                    <div class="mb-3 row">
+                        <label for="new-title" class="col-sm-2 col-form-label">Заголовок</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control new-task-title" id="new-title">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="new-description" class="form-label">Описание</label>
+                        <textarea class="form-control new-task-description" id="new-description" rows="3"></textarea>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id = "newModalCloseButton">Отмена</button>
+                <button type="button" class="btn btn-primary new-button"
+                        id="new-user-button">Создать
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h1>Тут скоро будут сказки...</h1>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button type="button"
+            class="btn btn-primary "
+            data-bs-toggle="modal"
+            data-bs-target="#newModal">
+        Добавить
+    </button>
+</nav>
+</header>
+
+
+<div class="container-fluid">
+    <div class="row" id="allTasksTable"> <!-- Добавить идентификатор "allTasksTable" -->
+        <th:block th:each="task : ${tasks}">
+        </th:block>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.2.4.js"
+        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="tasks.js"></script>
+<script type="text/javascript" src="modalDel.js"></script>
+<script type="text/javascript" src="modalUp.js"></script>
+<script type="text/javascript" src="modalNew.js"></script>
+</body>
+</html>
