@@ -1,9 +1,9 @@
 package ru.litavrina.ToDoListV2.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.litavrina.ToDoListV2.aspect.TrackUserAction;
+import ru.litavrina.ToDoListV2.exeption.TaskNotFoundException;
 import ru.litavrina.ToDoListV2.model.Task;
 import ru.litavrina.ToDoListV2.repository.TaskRepository;
 
@@ -26,6 +26,10 @@ public class TaskService {
 
         return taskRepository.findById(id);
 //        return taskRepository.findById(id).orElse(null);
+    }
+    public Task getTaskByIdWithThrow(Long id) {
+
+        return taskRepository.findById(id).orElseThrow(TaskNotFoundException::new);
     }
 
     public void deleteTask(Long id) {
