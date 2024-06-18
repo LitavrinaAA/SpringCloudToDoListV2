@@ -6,7 +6,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.litavrina.ToDoListV2.aspect.TrackUserAction;
 import ru.litavrina.ToDoListV2.model.Task;
+import ru.litavrina.ToDoListV2.service.FileGateway;
 import ru.litavrina.ToDoListV2.service.TaskService;
 
 import java.util.List;
@@ -18,12 +20,14 @@ public class TaskController {
 
     private static final Logger logger = LogManager.getRootLogger();
     private final TaskService taskService;
+    //для интеграции
+    private final FileGateway fileGateway;
 
     //Просто возвращает все таски из БД
     @GetMapping
     public ResponseEntity<List<Task>> getAllTasks() {
         logger.info("запросили все таски");
-        return new ResponseEntity<>(taskService.getAllTasks(), HttpStatus.FOUND);
+        return new ResponseEntity<List<Task>>(taskService.getAllTasks(), HttpStatus.FOUND);
     }
 
     //Возвращает одну таску из БД в Optional и проверяет isPresent
@@ -44,7 +48,8 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         logger.info("создали таску");
-        return new ResponseEntity<>(taskService.saveTask(task), HttpStatus.CREATED);
+        fileGateway.writeToFile(task.getTitle()+ ".txt", task.getDescription());
+        return new ResponseEntity<>(taskService.saveTask(task) , HttpStatus.CREATED);
     }
 
     //просто сохраняем таску, но присваеваем ей Id из пути
